@@ -10,6 +10,7 @@ export default class Bodydashfood extends Component {
         id: 1,
         nama: "hamburger",
         price: 19000,
+
         gambar:
           "https://assets.epicurious.com/photos/57c5c6d9cf9e9ad43de2d96e/master/pass/the-ultimate-hamburger.jpg"
       },
@@ -42,17 +43,14 @@ export default class Bodydashfood extends Component {
   };
 
   choice = id => {
-    // var data = this.state.makanan;
-    // var orderku = data.find(item => item.id === id);
-    // sessionStorage.setItem("data", JSON.stringify([orderku]));
-    // var orderan = [];
-    // orderan.push(orderku);
-    // console.log(orderan);
     var food = this.state.makanan;
+    var hapus = food.filter(item => item.id != id);
+
     var order = food.find(item => item.id === id);
 
     this.setState({
-      orderan: [...this.state.orderan, order]
+      orderan: [...this.state.orderan, order],
+      makanan: hapus
     });
   };
   componentDidMount() {
@@ -81,7 +79,9 @@ export default class Bodydashfood extends Component {
     });
   };
   bayar = () => {
-    alert("Terima Kasih");
+    this.setState({
+      orderan: []
+    });
   };
 
   render() {
@@ -110,7 +110,6 @@ export default class Bodydashfood extends Component {
                   <th>Restorant</th>
                   <th>Lokasi</th>
                   <th>Makanan Pesanan</th>
-                  <th>Quantity</th>
                   <th>Yang harus kamu bayar</th>
                 </tr>
               </thead>
@@ -129,12 +128,14 @@ export default class Bodydashfood extends Component {
                       }}
                     >
                       kamu pesan :{" "}
-                      {this.state.orderan.map(key => (
-                        <p style={{ fontWeight: "bold" }}>{key.nama}</p>
-                      ))}
+                      <ul>
+                        {this.state.orderan.map(key => (
+                          <li>{key.nama}</li>
+                        ))}
+                      </ul>
                     </div>
                   </td>
-                  <td>{this.state.qty} X</td>
+
                   <td>
                     Rp : {this.state.total}{" "}
                     <Button onClick={this.bayar}>Bayar Sekarang</Button>
@@ -145,16 +146,21 @@ export default class Bodydashfood extends Component {
           </Container>
         </Jumbotron>
         <Jumbotron fluid>
+          <h1>keranjang makanan</h1>
           <Container fluid>
-            {this.state.orderan.map(key => (
-              <CardCounter
-                gambar={key.gambar}
-                name={key.nama}
-                harga={key.price}
-                kurangTotalHarga={this.kurangTotalHarga}
-                tambahTotalHarga={this.tambahTotalHarga}
-              />
-            ))}
+            <Row>
+              {this.state.orderan.map(key => (
+                <Col>
+                  <CardCounter
+                    gambar={key.gambar}
+                    name={key.nama}
+                    harga={key.price}
+                    kurangTotalHarga={this.kurangTotalHarga}
+                    tambahTotalHarga={this.tambahTotalHarga}
+                  />
+                </Col>
+              ))}
+            </Row>
           </Container>
         </Jumbotron>
       </div>

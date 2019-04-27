@@ -24,7 +24,6 @@ export default class CardCounter extends Component {
   };
 
   render() {
-    console.log(this.props);
     return (
       <div style={{ padding: "10px", width: 300 }}>
         <Card>
@@ -35,7 +34,7 @@ export default class CardCounter extends Component {
             </CardTitle>
             <p>Rp:{this.props.harga}</p>
             <p>Pesan Berapa</p>
-            <h1>{this.state.qty}</h1>
+            <h1>{this.state.qty}x</h1>
             <Button onClick={this.tambah} size="lg" color="success">
               +
             </Button>{" "}
